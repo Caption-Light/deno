@@ -1,0 +1,54 @@
+use Libraries.Game.Game
+use Libraries.Game.Graphics.Drawable
+use Libraries.Game.InputMonitor
+use Libraries.Sound.Instrument
+use Libraries.Interface.Events.KeyboardListener
+use Libraries.Interface.Events.KeyboardEvent
+use Libraries.Sound.Music
+use Libraries.Game.Graphics.Color
+use Libraries.Interface.Events.CollisionEvent2D 
+use Libraries.Interface.Events.CollisionListener3D
+
+
+class Main is Game
+       InputMonitor im 
+        KeyboardEvent keys
+        Drawable land 
+        Drawable dino1
+        Drawable cactus
+        Color color
+        counter = 6
+    action Main
+//        SetScreenSize(800, 600)
+//        UseDesktopResolution(true)
+         StartGame()
+    end
+
+    
+    action CreateGame    
+       EnablePhysics2D (true) 
+       land:LoadFilledRectangle(1600,50)
+       land:EnablePhysics(true)
+       land:SetUnmovable()
+       dino1:Load("1439057-200.png")
+       cactus:Load("cac02_1.png")
+       cactus:SetScale(0.20)
+       cactus:SetPosition(300,45)
+       dino1:EnablePhysics(true)
+       dino1:SetResponsive()
+       Add (cactus)
+       Add(dino1)
+       Add(land)
+       
+
+       SetGravity2D(0,-535)
+    end
+
+    
+    action Update(number seconds)
+        dino1:MoveX(10)
+        if im:IsKeyPressed(keys:UP) or im:IsKeyPressed(keys:W) or im:IsKeyPressed(keys:SPACE)
+            dino1:MoveY(7)
+        end
+    end
+end
