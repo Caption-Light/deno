@@ -7,10 +7,10 @@ use Libraries.Interface.Events.KeyboardEvent
 use Libraries.Sound.Music
 use Libraries.Game.Graphics.Color
 use Libraries.Interface.Events.CollisionEvent2D 
-use Libraries.Interface.Events.CollisionListener3D
+use Libraries.Interface.Events.CollisionListener2D
 
 
-class Main is Game
+class Main is Game, CollisionListener2D
        InputMonitor im 
         KeyboardEvent keys
         Drawable land 
@@ -36,19 +36,28 @@ class Main is Game
        cactus:SetPosition(300,45)
        dino1:EnablePhysics(true)
        dino1:SetResponsive()
+       dino1:SetCollidable(true)
+      cactus:SetCollidable(true)
        Add (cactus)
        Add(dino1)
        Add(land)
-       
-
+       AddCollisionListener(me)
        SetGravity2D(0,-535)
     end
 
     
     action Update(number seconds)
-        dino1:MoveX(10)
+        dino1:MoveX(1)
         if im:IsKeyPressed(keys:UP) or im:IsKeyPressed(keys:W) or im:IsKeyPressed(keys:SPACE)
             dino1:MoveY(7)
         end
     end
+       
+    action BeginCollision(CollisionEvent2D event)
+        dino1:Move(0,50000)
+    end
+    
+    action FinishCollision (CollisionEvent2D event)
+    end
+
 end
